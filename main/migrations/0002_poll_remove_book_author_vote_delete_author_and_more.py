@@ -15,14 +15,14 @@ class Migration(migrations.Migration):
             name='Poll',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('назва', models.CharField(max_length=200, verbose_name='Назва опитування')),
-                ('опис', models.TextField(blank=True, verbose_name='Опис опитування')),
-                ('дата_створення', models.DateField(auto_now_add=True, verbose_name='Дата створення')),
-                ('активне', models.BooleanField(default=True, verbose_name='Активне?')),
-                ('категорія', models.CharField(choices=[('суспільство', 'Суспільство'), ('технології', 'Технології'), ('освіта', 'Освіта'), ('політика', 'Політика'), ('інше', 'Інше')], default='інше', max_length=50, verbose_name='Категорія')),
-                ('дозволено_анонімно', models.BooleanField(default=True, verbose_name='Анонімне голосування?')),
-                ('мін_вік', models.PositiveIntegerField(default=18, verbose_name='Мінімальний вік')),
-                ('кількість_голосів', models.PositiveIntegerField(default=0, verbose_name='Кількість голосів')),
+                ('title', models.CharField(max_length=200, verbose_name='Назва опитування')),
+                ('description', models.TextField(blank=True, verbose_name='Опис опитування')),
+                ('created_date', models.DateField(auto_now_add=True, verbose_name='Дата створення')),
+                ('is_active', models.BooleanField(default=True, verbose_name='Активне?')),
+                ('category', models.CharField(choices=[('society', 'Суспільство'), ('technology', 'Технології'), ('education', 'Освіта'), ('politics', 'Політика'), ('other', 'Інше')], default='other', max_length=50, verbose_name='Категорія')),
+                ('allow_anonymous', models.BooleanField(default=True, verbose_name='Анонімне голосування?')),
+                ('min_age', models.PositiveIntegerField(default=18, verbose_name='Мінімальний вік')),
+                ('votes_count', models.PositiveIntegerField(default=0, verbose_name='Кількість голосів')),
             ],
         ),
         migrations.RemoveField(
@@ -33,10 +33,10 @@ class Migration(migrations.Migration):
             name='Vote',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('варіант', models.CharField(max_length=100, verbose_name='Вибраний варіант')),
-                ('дата_голосування', models.DateTimeField(auto_now_add=True, verbose_name='Час голосування')),
+                ('choice', models.CharField(max_length=100, verbose_name='Вибраний варіант')),
+                ('voted_at', models.DateTimeField(auto_now_add=True, verbose_name='Час голосування')),
                 ('ip_address', models.GenericIPAddressField(blank=True, default='0.0.0.0', null=True, verbose_name='IP-адреса')),
-                ('опитування', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.poll', verbose_name='Опитування')),
+                ('poll', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.poll', verbose_name='Опитування')),
             ],
         ),
         migrations.DeleteModel(
@@ -45,4 +45,4 @@ class Migration(migrations.Migration):
         migrations.DeleteModel(
             name='Book',
         ),
-    ]
+    
